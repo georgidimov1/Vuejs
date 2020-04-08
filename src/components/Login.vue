@@ -60,6 +60,7 @@ export default {
           console.log(sessionStorage.authtoken);
           console.log(sessionStorage.username);
           this.$router.push('/')
+          location.reload()
          })
         .catch(console.error());
       function sessionStore(data) {

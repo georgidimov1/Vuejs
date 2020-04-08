@@ -53,6 +53,7 @@ export default {
               post('user', '_logout', {}, 'Kinvey')
                 .then(() => {
                     sessionStorage.clear();
+                    location.reload();
                      })
                 .catch(console.error());
   }
