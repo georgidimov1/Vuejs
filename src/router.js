@@ -3,10 +3,11 @@ import Register from './components/Register';
 import Landing from './components/Landing';
 import Login from './components/Login';
 import Create from './components/Create';
+import NotFound from './components/NotFound';
 
 const router = new VueRouter({
     mode: "history",
-    routes: [
+     routes: [
         {
             path: '/',
             component: Landing
@@ -21,7 +22,18 @@ const router = new VueRouter({
         },
         {
             path: '/create',
-            component: Create
+            name: "create",
+            component: Create,
+            beforeEnter:(to, from, next)=>{
+                if(sessionStorage.authtoken){next()}
+                else {next('/login')}
+            },
+            
+                   
+        },
+        {
+            path: '*',
+            component: NotFound
         }
              ]
 });

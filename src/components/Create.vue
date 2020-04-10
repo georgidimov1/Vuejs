@@ -18,7 +18,7 @@
     </div>
 
     <div class="form-label-group">
-      <input type="text" v-model="dateTime" class="form-control" placeholder="Date" required />
+      <input type="date" v-model="dateTime" class="form-control" placeholder="Date" required />
       <label for="inputTrekDate">Date</label>
     </div>
 

@@ -1,19 +1,19 @@
 <template>
   <div>
-    <div v-if="isAuth">
-      <div v-if="data">
+    <div v-if="isAuth" >
+      <div v-if="data" >
         <div v-for="(item,i) in data" :key='i' id="treks-list" >
-           <a class="card overflow-hidden treksPlaceholder trek-details" style="width: 20rem; height: 18rem;">
+           <a class="card overflow-hidden d-flex treksPlaceholder trek-details" style="width: 20rem; height: 18rem;">
             <div class="card-body">
               <p class="card-text" ></p>
              {{item.name[0]}}
             </div>
             <img class="card-image"  v-bind:src="item.name[3]" alt="Card image cap" />
+            <button class="button" >Likes: {{likes}}</button>
           </a>
         </div>
       </div>
-      <br/>
-      <div class="container" v-if="!data">
+      <div class="container" v-else>
         <div class="row">
           <div class="col-md-12">
             <div id="fouronefour">
@@ -60,17 +60,32 @@ export default {
   data: function(){
     get('appdata', 'TREKKING', 'Kinvey')
     .then((response)=>{this.data = response;})
-    
     return {
         isAuth: sessionStorage.authtoken,
         getTrek:"",
         namePlace:'',
-        data:''
+        data:'',
+        likes:0
         }
         }     
+    
   }
  
 </script>
 
-<style>
+<style scoped>
+button {
+    position: absolute;
+right:    5px;
+bottom:   5px;
+  background-color: #f8d7d7;
+  color: black;
+  font-size: 16px;
+  padding: 16px 30px;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  text-align: center;
+      }
+
 </style>
