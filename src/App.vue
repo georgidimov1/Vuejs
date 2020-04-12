@@ -3,7 +3,8 @@
        <Header :username='username'
                 :isAuth='isAuth'
        />
-       <router-view></router-view>
+       <router-view :isAuth='isAuth'
+                    :array='array'/>
        <Footer />
 
   </div>
@@ -12,7 +13,7 @@
 <script>
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
-
+import { get } from './requester'
 
 export default {
   name: 'App',
@@ -21,10 +22,15 @@ export default {
     Footer
   },
   data: function(){
+    get('appdata', 'TREKKING', 'Kinvey')
+    .then((response)=>{
+      this.array = response;
+       })
+   
      return {
         isAuth: sessionStorage.authtoken,
-        username: sessionStorage.username
-
+        username: sessionStorage.username,
+        array: ''
          }
 }
 }

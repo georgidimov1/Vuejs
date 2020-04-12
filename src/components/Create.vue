@@ -78,9 +78,9 @@ export default {
         },
         "Kinvey"
       )
-        .then(data => {
-          console.log(data._id);
-           this.$router.push('/')
+        .then(() => {
+            this.$router.push('/')
+            location.reload();
                  })
         .catch(console.error());
     }

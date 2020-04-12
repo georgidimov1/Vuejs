@@ -1,18 +1,18 @@
 <template>
-      <div class="row single-trek-details text-center">
+  <div class="row single-trek-details text-center">
+      <slot></slot>
     <div class="col-md-12 text-center overflow-hidden">
-      <img class="details-img" v-bind:src='imgUrl' />
+      <img class="details-img" v-bind:src='array.name[3]' />
        <div class="overflow-hidden my-3 p-3">
-        <h2 class="display-5">{{place}}</h2>
+        <h2 class="display-5">{{array.name[0]}}</h2>
         <p class="infoType">Description:</p>
-        <p class="trek-description">{{description}}</p>
-        <p class="infoType">Date: <u>{{date}}</u></p>
-        <p class="infoType">Likes: <u>{{likes}}</u></p>
-        <p class="infoType">Organizer: <u>{{username}}</u></p>
-        <p>{{this.item}}</p>
+        <p class="trek-description">{{array.name[2]}}</p>
+        <p class="infoType">Date: <u>{{array.name[1]}}</u></p>
+        <p class="infoType">Likes: <u>{{array.likes}}</u></p>
+        <p class="infoType">Organizer: <u>{{array.organizer}}</u></p>
        </div>
       <div class = "buttons-together">
-      <a class="a-button" href="#" >
+      <a class="a-button" href @click="close(array)" >
         <svg version="1.1" id="edit-button" width="30px"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	viewBox="0 0 293.129 293.129" style="enable-background:new 0 0 293.129 293.129;" xml:space="preserve">
 
@@ -30,23 +30,9 @@
 		L179.795,155.597z"/>
     
 </svg>
-Edit the trek
-      </a>
-      <a class="a-button" href="#" >
-        <svg version="1.1" width="30px" id="remove-button" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	viewBox="0 0 507.2 507.2" style="enable-background:new 0 0 507.2 507.2;" xml:space="preserve">
-<circle style="fill:rgb(248, 184, 8);" cx="253.6" cy="253.6" r="253.6"/>
-<path style="fill:rgb(248, 184, 8);" d="M147.2,368L284,504.8c115.2-13.6,206.4-104,220.8-219.2L367.2,148L147.2,368z"/>
-<path style="fill:#FFFFFF;" d="M373.6,309.6c11.2,11.2,11.2,30.4,0,41.6l-22.4,22.4c-11.2,11.2-30.4,11.2-41.6,0l-176-176
-	c-11.2-11.2-11.2-30.4,0-41.6l23.2-23.2c11.2-11.2,30.4-11.2,41.6,0L373.6,309.6z"/>
-<path style="fill:#D6D6D6;" d="M280.8,216L216,280.8l93.6,92.8c11.2,11.2,30.4,11.2,41.6,0l23.2-23.2c11.2-11.2,11.2-30.4,0-41.6
-	L280.8,216z"/>
-<path style="fill:#FFFFFF;" d="M309.6,133.6c11.2-11.2,30.4-11.2,41.6,0l23.2,23.2c11.2,11.2,11.2,30.4,0,41.6L197.6,373.6
-	c-11.2,11.2-30.4,11.2-41.6,0l-22.4-22.4c-11.2-11.2-11.2-30.4,0-41.6L309.6,133.6z"/>
-</svg>
 Close the trek
       </a>
-      <a class="a-button" href="#" > 
+      <a class="a-button" href @click="like(array)" > 
       <svg version="1.1" width="30px" id="like-button" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
         viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
      <path style="fill:rgb(248, 184, 8)" d="M24.85,10.126c2.018-4.783,6.628-8.125,11.99-8.125c7.223,0,12.425,6.179,13.079,13.543
@@ -62,19 +48,50 @@ Close the trek
 </template>
 
 <script>
+import { get } from '../requester.js'
+import { del } from '../requester.js'
+import { put } from '../requester.js'
 export default {
+props:["username","isAuth", "data"],
 name: 'Trek',
   data: function(){
+     get('appdata', `TREKKING/${this.$route.params._id}`, 'Kinvey')
+    .then((response)=>{
+      this.array = response;
+     })
         return {
-        item:'',
-        place:'',
-        description:'',
-        date:'',
-        imgUrl:'',
-        likes:'',
-        username:''
+        array:''
          }
         },
+        methods:{
+    close(array){
+        if(array._acl.creator===sessionStorage.userId){
+            del('appdata', `TREKKING/${this.$route.params._id}`, 'Kinvey')
+            .then(()=>{
+            this.$router.push('/');
+            location.reload();
+          })
+        .catch(console.error());
+        }
+    },
+    like(array){
+        const arrayNew = Number (`${array.likes}` + Number(1))
+        console.log(arrayNew)
+        if(array._acl.creator!==sessionStorage.userId){
+     put(
+        "appdata",
+        `TREKKING/${this.$route.params._id}`,
+        {likes:arrayNew},
+        "Kinvey"
+      )
+     .then(()=>{
+            location.reload();
+          })
+        .catch(console.error());
+        }
+        
+    }
+    }
 }
 
 </script>

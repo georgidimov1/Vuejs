@@ -57,10 +57,10 @@ export default {
       post("user", "login", { username, password }, "Basic")
         .then(data => {
           sessionStore(data);
-          console.log(sessionStorage.authtoken);
-          console.log(sessionStorage.username);
-          this.$router.push('/');
-          location.reload()
+          })
+          .then(()=>{
+            this.$router.push('/');
+            location.reload();
           })
         .catch(console.error());
       function sessionStore(data) {

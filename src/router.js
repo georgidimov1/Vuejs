@@ -31,7 +31,7 @@ const router = new VueRouter({
             }                 
         },
         {
-            path: '/trek',
+            path: '/trek/:_id',
             name: "trek",
             component: Trek,
             beforeEnter:(to, from, next)=>{
