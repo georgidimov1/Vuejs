@@ -4,6 +4,7 @@ import Landing from './components/Landing';
 import Login from './components/Login';
 import Create from './components/Create';
 import NotFound from './components/NotFound';
+import Trek from './components/Trek';
 
 const router = new VueRouter({
     mode: "history",
@@ -27,9 +28,16 @@ const router = new VueRouter({
             beforeEnter:(to, from, next)=>{
                 if(sessionStorage.authtoken){next()}
                 else {next('/login')}
-            },
-            
-                   
+            }                 
+        },
+        {
+            path: '/trek',
+            name: "trek",
+            component: Trek,
+            beforeEnter:(to, from, next)=>{
+                if(sessionStorage.authtoken){next()}
+                else {next('/login')}
+            }                 
         },
         {
             path: '*',

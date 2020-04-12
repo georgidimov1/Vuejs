@@ -1,15 +1,15 @@
 <template>
   <div>
-    <div v-if="isAuth" >
-      <div v-if="data" >
-        <div v-for="(item,i) in data" :key='i' id="treks-list" >
-           <a class="card overflow-hidden d-flex treksPlaceholder trek-details" style="width: 20rem; height: 18rem;">
+    <div v-if="isAuth" class="container">
+      <div v-if="data" class="row">
+         <div v-for="(item) in data" :key='item._id' id="treks-list" v-bind="item" @click="details()" >
+            <a class="card overflow-hidden d-flex treksPlaceholder trek-details" style="width: 20rem; height: 18rem;">
             <div class="card-body">
               <p class="card-text" ></p>
              {{item.name[0]}}
             </div>
             <img class="card-image"  v-bind:src="item.name[3]" alt="Card image cap" />
-            <button class="button" >Likes: {{likes}}</button>
+           <br/>
           </a>
         </div>
       </div>
@@ -54,21 +54,25 @@
 
 <script>
 import { get } from '../requester'
-
 export default {
   name: 'Landing',
   data: function(){
     get('appdata', 'TREKKING', 'Kinvey')
     .then((response)=>{this.data = response;})
+    
     return {
         isAuth: sessionStorage.authtoken,
         getTrek:"",
         namePlace:'',
-        data:'',
-        likes:0
-        }
-        }     
-    
+        data:''
+             }
+        },
+        methods:{
+          details(){
+             this.$router.push('/trek')
+                     
+          }
+        }   
   }
  
 </script>

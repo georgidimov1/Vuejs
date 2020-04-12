@@ -4,6 +4,7 @@ import VueFlexLayout from 'vue-flex-layout'
 import VueRouter from 'vue-router';
 import router from './router';
 import Vuelidate from 'vuelidate'
+export const EventBus = new Vue();
 
 Vue.use(VueFlexLayout)
 Vue.use(VueRouter)

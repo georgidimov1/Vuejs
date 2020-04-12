@@ -28,7 +28,7 @@
       </router-link>
       <div class="container d-flex flex-column flex-md-row justify-content-between" v-if="isAuth">
         <router-link to="/create" class="py-2 d-none d-md-inline-block">Request Trek</router-link>
-        <a class="py-2 d-none d-md-inline-block" href="#">Hello, {{username}}</a>
+        <a class="py-2 d-none d-md-inline-block" >Hello, {{username}}</a>
         <a href="/" class="py-2 d-none d-md-inline-block" v-on:click.prevent="logoutHandler">Logout</a>
       </div>
       <div class="container d-flex flex-column flex-md-row justify-content-between" v-else>

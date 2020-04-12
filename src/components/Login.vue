@@ -59,9 +59,9 @@ export default {
           sessionStore(data);
           console.log(sessionStorage.authtoken);
           console.log(sessionStorage.username);
-          this.$router.push('/')
+          this.$router.push('/');
           location.reload()
-         })
+          })
         .catch(console.error());
       function sessionStore(data) {
         sessionStorage.setItem("authtoken", data._kmd.authtoken);

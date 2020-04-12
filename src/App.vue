@@ -1,7 +1,7 @@
 <template>
   <div id="app">
        <Header :username='username'
-                 :isAuth='isAuth'
+                :isAuth='isAuth'
        />
        <router-view></router-view>
        <Footer />
@@ -13,6 +13,7 @@
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 
+
 export default {
   name: 'App',
   components: {
@@ -20,7 +21,7 @@ export default {
     Footer
   },
   data: function(){
-    return {
+     return {
         isAuth: sessionStorage.authtoken,
         username: sessionStorage.username
 
@@ -236,10 +237,10 @@ box-shadow:0 0 1.5rem 0 rgba(0, 0, 0, 0.712);
 }
 
 #treks-list{
-  width: 100%;
+  width:100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content:center;
 }
 
 .img{
